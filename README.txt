@@ -42,7 +42,8 @@ like <special html characters>.
 .p<The raw leaf (represented by "&lt;"), is like the escaped leaf, except that
 it doesn't escape raw HTML things.
 
-.p|There are a few things that I still need to add:
+.p|The end goal is for nmark to replace ncdg, but there are a few things that I
+still need to add:
 
 *-|Cleaner inline styles (it's not possible to make text that's italicized and
   |bolded).

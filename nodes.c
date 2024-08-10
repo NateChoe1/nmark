@@ -138,6 +138,7 @@ char *open_node(enum node node) {
 	case NODE_H2: return "<h2>";
 	case NODE_P: return "<p>";
 	case NODE_BLOCKQUOTE: return "<blockquote>";
+	case NODE_CODE_BLOCK: return "<pre><code>";
 	default: return "";
 	}
 }
@@ -151,6 +152,7 @@ char *close_node(enum node node) {
 	case NODE_H2: return "</h2>";
 	case NODE_P: return "</p>";
 	case NODE_BLOCKQUOTE: return "</blockquote>";
+	case NODE_CODE_BLOCK: return "</code></pre>";
 	default: return "";
 	}
 }

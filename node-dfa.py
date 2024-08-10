@@ -11,6 +11,7 @@ nodedict = {
     "NODE_H2": "#2",
     "NODE_P": ".",
     "NODE_BLOCKQUOTE": ">",
+    "NODE_CODE_BLOCK": "```",
     "NODE_START_PARAGRAPH": "p",
     "LEAF_PARAGRAPH": "|",
     "LEAF_ESCAPED": '"',

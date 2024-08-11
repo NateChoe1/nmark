@@ -21,9 +21,8 @@ enum node {
 	LEAF_PARAGRAPH,
 	LEAF_ESCAPED,
 	LEAF_RAW,
-	LEAF_SET_VAR,
-	LEAF_USE_VAR,
-	LEAF_EMPTY_LINE, /* pseudo-leaf, corresponds with empty lines */
+	LEAF_EMPTY_LINE, /* pseudo-leaf, corresponds with empty lines and
+			    comments, ignored by nmark */
 	NODE_NIL /* invalid node, doesn't correspond with anything */
 };
 
@@ -56,12 +55,6 @@ struct line {
 
 	/* vestigial data that's specific to each leaf type. */
 	void *leaf_data;
-};
-
-struct linebuf {
-	struct line *lines;
-	size_t alloc;
-	size_t len;
 };
 
 /* populates popped_nodes, new_nodes, num_popped_nodes, num_new_nodes, type, and

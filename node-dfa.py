@@ -16,8 +16,7 @@ nodedict = {
     "LEAF_PARAGRAPH": "|",
     "LEAF_ESCAPED": '"',
     "LEAF_RAW": '<',
-    "LEAF_SET_VAR": '==',
-    "LEAF_USE_VAR": '=%',
+    "LEAF_EMPTY_LINE": '//',
 }
 
 # warning: the code below this line is known to cause cancer by the state of

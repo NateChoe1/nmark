@@ -1,3 +1,5 @@
+//THIS IS A COMMENT
+
 #1|nmark: an actual markup language
 
 .p|nmark is a markup language that I hacked together. The goal was to have

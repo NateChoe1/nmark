@@ -24,12 +24,8 @@ void print_data(struct line *line, FILE *out) {
 	case LEAF_RAW:
 		fputs(line->data, out);
 		return;
-	case LEAF_SET_VAR:
+	case LEAF_EMPTY_LINE: default:
 		return;
-	case LEAF_USE_VAR:
-		fputs((char *) line->leaf_data, out);
-		return;
-	default: return;
 	}
 }
 

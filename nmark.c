@@ -73,7 +73,7 @@ static int process_line(char *path, int file_idx, long line_num, char *text,
 
 /* TODO: this function has a subtle dependency on process_line. ideally this
  * function would take in a callback for each line, but C doesn't have closures
- * so that's not easy.*/
+ * so that's not easy. */
 static int read_lines(char *path, int idx, struct nodestack *stack, FILE *out) {
 	FILE *file;
 	long linenum;

@@ -28,6 +28,7 @@ nmark encounters an empty line.
 
  *-|Nested nodes
  *-|/italicized/, _underscored_, and *bold* text.
+ *-|<(https://natechoe.dev)[hyperlinks]>
 
 .p|There are two kinds of nodes in nmark: regular nodes (which are often just
 called "nodes"), and leaf nodes (which are often just called "leaves"). Nodes
@@ -45,7 +46,4 @@ it doesn't escape raw HTML things.
 .p|The end goal is for nmark to replace ncdg, but there are a few things that I
 still need to add:
 
-*-|Cleaner inline styles (it's not possible to make text that's italicized and
-  |bolded).
- -|Hyperlinks
- -|Images
+*-|Images

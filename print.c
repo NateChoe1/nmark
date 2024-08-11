@@ -36,8 +36,24 @@ void print_data(struct line *line, FILE *out) {
 static void print_style(char *data, long i, char chr, char *open, char *close,
 		FILE *out) {
 	int open_left, open_right;
-	open_left = (i == 0) || (!isalnum(data[i-1]));
-	open_right = (data[i+1] == '\0') || (!isalnum(data[i+1]));
+	long j;
+
+	open_left = 1;
+	for (j = i-1; j >= 0 && !isspace(data[j]); --j) {
+		if (isalnum(data[j])) {
+			open_left = 0;
+			break;
+		}
+	}
+
+	open_right = 1;
+	for (j = i+1; data[j] != '\0' && !isspace(data[j]); ++j) {
+		if (isalnum(data[j])) {
+			open_right = 0;
+			break;
+		}
+	}
+
 	switch (open_left << 1 | open_right) {
 	case 2:
 		fputs(open, out);
@@ -58,6 +74,7 @@ static void print_paragraph(struct line *line, FILE *out) {
 	data = line->data;
 	for (i = 0; data[i] != '\0'; ++i) {
 		switch (data[i]) {
+		/* inline styles */
 #define STYLE(chr, open, close) \
 		case chr: \
 			print_style(data, i, chr, open, close, out); \
@@ -66,6 +83,28 @@ static void print_paragraph(struct line *line, FILE *out) {
 		STYLE('*', "<b>", "</b>");
 		STYLE('_', "<u>", "</u>");
 #undef STYLE
+
+		/* hyperlinks (basic 2 char string replacements) */
+		case '<':
+			if (data[++i] != '(') {
+				goto normal;
+			}
+			fputs("<a href='", out);
+			break;
+		case ')':
+			if (data[++i] != '[') {
+				goto normal;
+			}
+			fputs("'>", out);
+			break;
+		case ']':
+			if (data[++i] != '>') {
+				goto normal;
+			}
+			fputs("</a>", out);
+			break;
+
+		/* escaped characters */
 		case '\\':
 			if (data[i+1] == '\0') {
 				fputc('\\', out);
@@ -76,7 +115,9 @@ static void print_paragraph(struct line *line, FILE *out) {
 			 * escaped chars. */
 			fputc(data[++i], out);
 			break;
-		default:
+
+		/* normal characters */
+		default: normal:
 			print_escape_char(data[i], out);
 			break;
 		}

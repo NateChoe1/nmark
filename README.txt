@@ -45,6 +45,11 @@ like <special html characters>.
 .p<The raw leaf (represented by "&lt;"), is like the escaped leaf, except that
 it doesn't escape raw HTML things.
 
+.$$cat
+ $|We can also execute shell commands. The "$$" block executes a command and
+ $|escapes any HTML entities in the output, while the "$<" command doesn't
+ $|escape anything. Subsequent lines in "$|" blocks are fed into standard input.
+
 .p|The end goal is for nmark to replace ncdg, but there are a few things that I
 still need to add:
 

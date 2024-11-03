@@ -20,6 +20,8 @@ char *err2str(int errnum) {
 		return "Duplicate variable declaration";
 	case NMARK_ERR_INVALID_VAR:
 		return "Use of invalid variable";
+	case NMARK_ERR_EXEC_FAIL:
+		return "Failed to fork process";
 	default:
 		return "Unknown error code";
 	}

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <signal.h>
 
 #include "nmark.h"
 #include "consts.h"
@@ -9,6 +10,8 @@ int main(int argc, char **argv) {
 	if (argc > 1) {
 		return runjob(argc-1, argv+1);
 	}
+
+	signal(SIGCHLD, SIG_IGN);
 
 	for (;;) {
 		int res;

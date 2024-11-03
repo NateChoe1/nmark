@@ -29,6 +29,42 @@ void print_data(struct line *line, FILE *out) {
 	}
 }
 
+void copy_file(FILE *in, FILE *out, int escape_entities) {
+	int c;
+	for (;;) {
+		if ((c = fgetc(in)) == EOF) {
+			return;
+		}
+		if (!escape_entities) {
+			fputc(c, out);
+			continue;
+		}
+		switch (c) {
+		case '&':
+			fputs("&amp;", out);
+			break;
+		case ';':
+			fputs("&semi;", out);
+			break;
+		case '<':
+			fputs("&lt;", out);
+			break;
+		case '>':
+			fputs("&gt;", out);
+			break;
+		case '\'':
+			fputs("&apos;", out);
+			break;
+		case '"':
+			fputs("&quot;", out);
+			break;
+		default:
+			fputc(c, out);
+			break;
+		}
+	}
+}
+
 static void print_style(char *data, long i, char chr, char *open, char *close,
 		FILE *out) {
 	int open_left, open_right;

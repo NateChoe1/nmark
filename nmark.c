@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "util.h"
 #include "nmark.h"
@@ -12,6 +13,7 @@ static int process_line(char *path, int file_idx, long line_num, char *text,
 
 static int read_lines(char *path, int idx, struct nodestack *stack, FILE *out);
 static char *read_line(FILE *file);
+static int start_process(char *cmd, FILE **read_ret, FILE **write_ret);
 
 int runjob(int argc, char **argv) {
 	long i;
@@ -59,6 +61,35 @@ static int process_line(char *path, int file_idx, long line_num, char *text,
 		fprintf(stderr, "%s:%ld: %s\n", line.orig_file, line.line_num,
 				err2str(res));
 		return res;
+	}
+
+	if (stack->sh_read != NULL && stack->sh_write != NULL) {
+		if (line.type != LEAF_SH_DATA ||
+				line.num_popped_nodes != 0 ||
+				line.num_new_nodes != 0) {
+			/* in this case, we're done with our command and should
+			 * output the result back to the file. */
+			fclose(stack->sh_write);
+			copy_file(stack->sh_read, out, stack->cmd_cooked);
+			fclose(stack->sh_read);
+			stack->sh_read = NULL;
+			stack->sh_write = NULL;
+		} else {
+			/* in this case, we're just feeding data to our command
+			 * through a LEAF_SH_DATA node */
+			fputs(line.data, stack->sh_write);
+			fputc('\n', stack->sh_write);
+		}
+	}
+
+	if (line.type == LEAF_SH_RAW || line.type == LEAF_SH_COOKED) {
+		res = start_process(line.data, &stack->sh_read, &stack->sh_write);
+		if (res != 0) {
+			fprintf(stderr, "%s:%ld: %s\n", line.orig_file, line.line_num,
+					err2str(res));
+			return res;
+		}
+		stack->cmd_cooked = line.type == LEAF_SH_COOKED;
 	}
 
 	for (i = line.num_popped_nodes - 1; i >= 0; --i) {
@@ -123,4 +154,42 @@ static char *read_line(FILE *file) {
 		}
 		line_buffer[line_len++] = ch;
 	}
+}
+
+static int start_process(char *cmd, FILE **read_ret, FILE **write_ret) {
+	int parent_read[2], parent_write[2];
+	if (pipe(parent_read) == -1) {
+		goto error1;
+	}
+	if (pipe(parent_write) == -1) {
+		goto error2;
+	}
+
+	/* TODO: error handling for these system calls */
+	switch (fork()) {
+	case -1:
+		goto error3;
+	case 0:
+		close(parent_read[0]);
+		close(parent_write[1]);
+		dup2(parent_write[0], 0);
+		dup2(parent_read[1], 1);
+		execl("/bin/sh", "sh", "-c", cmd, NULL);
+		exit(EXIT_FAILURE);
+	default:
+		close(parent_read[1]);
+		close(parent_write[0]);
+		*read_ret = fdopen(parent_read[0], "r");
+		*write_ret = fdopen(parent_write[1], "w");
+		break;
+	}
+	return NMARK_ERR_SUCCESS;
+error3:
+	close(parent_write[0]);
+	close(parent_write[1]);
+error2:
+	close(parent_read[0]);
+	close(parent_read[1]);
+error1:
+	return NMARK_ERR_EXEC_FAIL;
 }

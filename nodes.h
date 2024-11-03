@@ -3,6 +3,8 @@
 
 /* TODO: this file is kind of bloated */
 
+#include <stdio.h>
+
 #include "limits.h"
 
 enum node {
@@ -21,6 +23,9 @@ enum node {
 	LEAF_PARAGRAPH,
 	LEAF_ESCAPED,
 	LEAF_RAW,
+	LEAF_SH_RAW,
+	LEAF_SH_COOKED,
+	LEAF_SH_DATA,
 	LEAF_EMPTY_LINE, /* pseudo-leaf, corresponds with empty lines and
 			    comments, ignored by nmark */
 	NODE_NIL /* invalid node, doesn't correspond with anything */
@@ -30,6 +35,10 @@ struct nodestack {
 	enum node nodes[MAX_NODES]; /* only contains nodes, not leaves */
 	int len;
 	int file_index;
+
+	FILE *sh_read;
+	FILE *sh_write;
+	int cmd_cooked; /* bool */
 
 	int is_paragraph;
 	enum node curr_type;

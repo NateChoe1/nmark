@@ -16,6 +16,9 @@ nodedict = {
     "LEAF_PARAGRAPH": "|",
     "LEAF_ESCAPED": '"',
     "LEAF_RAW": '<',
+    "LEAF_SH_RAW": "$<",
+    "LEAF_SH_COOKED": "$$",
+    "LEAF_SH_DATA": "$|",
     "LEAF_EMPTY_LINE": '//',
 }
 

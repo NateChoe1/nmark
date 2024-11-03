@@ -14,6 +14,7 @@
 #define NMARK_ERR_INVALID_INPUT 6
 #define NMARK_ERR_DUP_VAR 7
 #define NMARK_ERR_INVALID_VAR 8
+#define NMARK_ERR_EXEC_FAIL 9
 
 extern char *err2str(int errnum);
 extern void print_error(int errnum, struct line *line, FILE *file);

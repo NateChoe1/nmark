@@ -161,4 +161,5 @@ void reset_stack(struct nodestack *stack) {
 	stack->len = 0;
 	stack->file_index = -1;
 	stack->is_paragraph = 0;
+	stack->sh_read = stack->sh_write = NULL;
 }

@@ -136,6 +136,10 @@ char *open_node(enum node node) {
 	case NODE_LI: return "<li>";
 	case NODE_H1: return "<h1>";
 	case NODE_H2: return "<h2>";
+	case NODE_H3: return "<h3>";
+	case NODE_H4: return "<h4>";
+	case NODE_H5: return "<h5>";
+	case NODE_H6: return "<h6>";
 	case NODE_P: return "<p>";
 	case NODE_BLOCKQUOTE: return "<blockquote>";
 	case NODE_CODE_BLOCK: return "<pre><code>";
@@ -150,6 +154,10 @@ char *close_node(enum node node) {
 	case NODE_LI: return "</li>";
 	case NODE_H1: return "</h1>";
 	case NODE_H2: return "</h2>";
+	case NODE_H3: return "</h3>";
+	case NODE_H4: return "</h4>";
+	case NODE_H5: return "</h5>";
+	case NODE_H6: return "</h6>";
 	case NODE_P: return "</p>";
 	case NODE_BLOCKQUOTE: return "</blockquote>";
 	case NODE_CODE_BLOCK: return "</code></pre>";

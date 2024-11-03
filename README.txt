@@ -29,7 +29,7 @@ nmark encounters an empty line.
   |corresponds to a <ul> tag, and "-" corresponds to a <li> tag.
 
  *-|Nested nodes
- *-|/italicized/, _underscored_, and *bold* text.
+ *-|/italicized/, _underscored_, and *bold* text, as well as `inline code`.
  *-|<(https://natechoe.dev)[hyperlinks]>
 
 .p|There are two kinds of nodes in nmark: regular nodes (which are often just

@@ -114,6 +114,7 @@ static void print_paragraph(struct line *line, FILE *out) {
 		STYLE('/', "<i>", "</i>");
 		STYLE('*', "<b>", "</b>");
 		STYLE('_', "<u>", "</u>");
+		STYLE('`', "<code>", "</code>");
 #undef STYLE
 
 		/* hyperlinks (basic 2 char string replacements) */

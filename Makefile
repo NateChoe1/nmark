@@ -21,5 +21,8 @@ install: $(OUT)
 uninstall:
 	rm $(PREFIX)/bin/$(OUT)
 
+clean:
+	rm -f *.o nmark
+
 .INTERMEDIATE: node-dfa.c
-.PHONY: install uninstall
+.PHONY: install uninstall clean

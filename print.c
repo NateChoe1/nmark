@@ -119,21 +119,24 @@ static void print_paragraph(struct line *line, FILE *out) {
 
 		/* hyperlinks (basic 2 char string replacements) */
 		case '<':
-			if (data[++i] != '(') {
+			if (data[i+1] != '(') {
 				goto normal;
 			}
+			++i;
 			fputs("<a href='", out);
 			break;
 		case ')':
-			if (data[++i] != '[') {
+			if (data[i+1] != '[') {
 				goto normal;
 			}
+			++i;
 			fputs("'>", out);
 			break;
 		case ']':
-			if (data[++i] != '>') {
+			if (data[i+1] != '>') {
 				goto normal;
 			}
+			++i;
 			fputs("</a>", out);
 			break;
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-# this code generates a dfa of nodes. it's pretty messy, but i've structured it
-# so that you really only have to worry about this one definition.
+# This code is kind of confusing, but I've structured it so that you only have
+# to worry about this dictionary.
 
 nodedict = {
     "NODE_OL": "1",
@@ -26,8 +26,7 @@ nodedict = {
     "LEAF_EMPTY_LINE": '//',
 }
 
-# warning: the code below this line is known to cause cancer by the state of
-# california.
+# You can safely ignore everything below this line.
 
 import re
 

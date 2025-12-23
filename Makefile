@@ -1,5 +1,4 @@
-SRC=$(wildcard *.c) node-dfa.c
-OBJ=$(SRC:.c=.o)
+OBJ=errors.o  main.o  nmark.o  nodes.o  print.o  util.o node-dfa.o
 HEADERS=$(wildcard *.h)
 CFLAGS=-O2 -ansi -Wall -Wpedantic -Wextra -Werror -ggdb -D_POSIX_C_SOURCE
 LDFLAGS=

@@ -151,8 +151,12 @@ static void print_paragraph(struct line *line, FILE *out) {
              * won't work because the the backticks can't detect that they're
              * part of an actual word rather than just standalone characters. to
              * fix this we can insert a nonce letter like `@\0` to indicate that
-             * there is an actual word there. */
-            if (data[i+1] == '0') {
+             * there is an actual word there.
+             *
+             * similarly, if we want to put text directly next to stylized text,
+             * such as when we have many `object`s, we can say `object`\ s
+             * */
+            if (data[i+1] == '0' || data[i+1] == ' ') {
                 ++i;
                 break;
             }
